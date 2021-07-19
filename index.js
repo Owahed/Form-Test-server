@@ -20,7 +20,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const inputCollection = client.db("FormDatabase").collection("FormValu");
-    
+
     app.get('/allList',(req,res)=>{
         inputCollection.find()
         .toArray((err,items)=>{
@@ -38,14 +38,6 @@ client.connect(err => {
 
     })
 
-    // app.delete('/delete/:id',(req,res)=>{
-    //     productCollection.deleteOne({_id: ObjectId(req.params.id)})
-    //     .then(result=>{
-    //        res.send(result.deletedCount>0);
-    //     })
-    // })
-
-   
 
 });
 
