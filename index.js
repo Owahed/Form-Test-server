@@ -20,6 +20,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const inputCollection = client.db("FormDatabase").collection("FormValu");
+    const inputFile = client.db("FormDatabase").collection("file");
 
     app.get('/allList',(req,res)=>{
         inputCollection.find()
@@ -31,6 +32,15 @@ client.connect(err => {
     app.post('/addForm', (req, res) => {
         const newBook = req.body;
         inputCollection.insertOne(newBook)
+            .then(result => {
+                console.log('insurt', result.insertedCount > 0)
+                res.send(result.insertedCount > 0)
+            })
+
+    })
+    app.post('/addFile', (req, res) => {
+        const newBook = req.body;
+        inputFile.insertOne(newBook)
             .then(result => {
                 console.log('insurt', result.insertedCount > 0)
                 res.send(result.insertedCount > 0)
